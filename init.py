@@ -2,11 +2,11 @@ from pypresence import Presence
 import time
 import os
 
-client_id = '478889900964446211'  # Fake ID, put your real one here
-RPC = Presence(client_id)  # Initialize the client class
-RPC.connect() # Start the handshake loop
+client_id = '478889900964446211'
+RPC = Presence(client_id)
+RPC.connect()
 
-RPC.update(state="Description: Initializing...", details="Initializing...", start=int(time.time()),large_image="rmit-l")  # Set the presence
+RPC.update(state="Description: Initializing...", details="Initializing...", start=int(time.time()),large_image="rmit-l")
 command = None
 print("")
 print("Discord Rich Presence has been started.")
@@ -55,6 +55,3 @@ while True:
         print("Invalid command!")
         print("")
         command = console(command)
-
-# while True:  # The presence will stay on as long as the program is running
-#     time.sleep(15) # Can only update rich presence every 15 seconds
