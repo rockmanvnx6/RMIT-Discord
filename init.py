@@ -16,17 +16,30 @@ def console(command):
     return command
 
 def check(sub_display,des_display,tol_display):
-    if (sub_display == "" or des_display == "" or tol_display == "" or len(sub_display) < 2 or len(sub_display) > 128
-        or len(des_display) < 2 or len(des_display) > 128 or len(tol_display) < 2 or len(tol_display) > 128):
-        print("")
-        print("* Fields can't be empty and must be between 2 and 128 characters")
-        print("")
-        sub_display = input("Input subject: ")
-        des_display = input("Input description: ")
-        tol_display = input("Tooltip when hover RMIT logo: ")
-        return check(sub_display,des_display,tol_display)
+    if(tol_display != ""):
+        if (sub_display == "" or des_display == "" or len(sub_display) < 2 or len(sub_display) > 128
+            or len(des_display) < 2 or len(des_display) > 128 or len(tol_display) < 2 or len(tol_display) > 128):
+            print("")
+            print("* Fields can't be empty and must be between 2 and 128 characters")
+            print("")
+            sub_display = input("Input subject: ")
+            des_display = input("Input description: ")
+            tol_display = input("Tooltip when hover RMIT logo: ")
+            return check(sub_display,des_display,tol_display)
+        else:
+            return sub_display,des_display,tol_display
     else:
-        return sub_display,des_display,tol_display
+        if (sub_display == "" or des_display == "" or len(sub_display) < 2 or len(sub_display) > 128
+            or len(des_display) < 2 or len(des_display) > 128):
+            print("")
+            print("* Fields can't be empty and must be between 2 and 128 characters")
+            print("")
+            sub_display = input("Input subject: ")
+            des_display = input("Input description: ")
+            return check(sub_display, des_display, tol_display)
+        else:
+            return sub_display,des_display,tol_display
+
 
 command = console(command)
 
@@ -44,11 +57,14 @@ while True:
         print("")
         sub_display = input("Input subject: ")
         des_display = input("Input description: ")
-        tol_display = input("Tooltip when hover RMIT logo: ")
+        tol_display = input("Tooltip when hover RMIT logo (leave blank to disable): ")
 
         sub_display,des_display,tol_display = check(sub_display,des_display,tol_display)
 
-        RPC.update(state="Description: " + des_display, details="" + sub_display, start=int(time.time()),large_text=tol_display, large_image="rmit-l")
+        if(tol_display != ""):
+            RPC.update(state="Description: " + des_display, details="" + sub_display, start=int(time.time()),large_text=tol_display, large_image="rmit-l")
+        else:
+            RPC.update(state="Description: " + des_display, details="" + sub_display, start=int(time.time()), large_image="rmit-l")
         print("Updated Successfully !!!")
         print("")
         command = console(command)
